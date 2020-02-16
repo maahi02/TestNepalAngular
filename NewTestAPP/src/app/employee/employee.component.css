@@ -1,0 +1,20 @@
+/*
+   server-side-angular-way.component.css
+*/
+.no-data-available {
+    text-align: center;
+  }
+  
+  /*
+     src/styles.css (i.e. your global style)
+  */
+  .dataTables_empty {
+    display: none;
+  }
+
+  .card-header{
+     padding: 0;
+    }
+    #toggle-1-header{
+       padding: 0;
+    }

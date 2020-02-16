@@ -1,0 +1,117 @@
+<div>
+
+  <p>
+    <button type="button" class="btn btn-outline-primary" (click)="isCollapsed = !isCollapsed"
+      [attr.aria-expanded]="!isCollapsed" aria-controls="collapseExample">
+      Filter Record
+    </button>
+    <span *ngIf="checkedEmpIds.length || gridCheckAll">
+      <button style="float: right;" (click)="export('csv')"> CSV </button>
+      <button style="float: right;" (click)="export('excel')"> EXCEL</button>
+      <button style="float: right;" (click)="export('pdf')">PDF</button>
+    </span>
+  </p>
+
+  <div id="collapseExample" [ngbCollapse]="isCollapsed">
+    <div class="card" style="padding-left: 65px;">
+      <div class="card-body">
+
+        <div class="form-group row">
+          <div class="col-xs-3">
+            <label for="ex2">Salary Start From (e.g 50000)</label>
+            <input class="form-control" [(ngModel)]="filterModel.StartSalary" id="ex2" type="text">
+          </div>
+          <div class="col-xs-3">
+            <label for="ex2">
+              Salary Below (e.g 900000)
+            </label>
+            <input class="form-control" [(ngModel)]="filterModel.EndSalary" id="ex2" type="text">
+          </div>
+
+          <div class="col-xs-3" style="margin-left: 15px;">
+            <label for="ex2">Date Of Birth From</label>
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="dps" [(ngModel)]="filterModel.DobStart"
+                ngbDatepicker #ds="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="ds.toggle()" type="button"></button>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-3">
+            <label for="ex2">
+              Date Of Birth To
+            </label>
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd" name="dpe" [(ngModel)]="filterModel.DobEnd"
+                ngbDatepicker #de="ngbDatepicker">
+              <div class="input-group-append">
+                <button class="btn btn-outline-secondary calendar" (click)="de.toggle()" type="button"></button>
+              </div>
+              <button style="margin-left: 10px;" class="btn btn-default" (click)="reloadData()">Apply</button>
+
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <hr />
+
+  <!-- <table #dataTable class="display" style="width:100%">
+  </table> -->
+  <div style="margin-top: 3%;">
+    <table id="employeeListId" #dataTable class="row-border hover">
+      <thead>
+        <tr>
+          <td style="border: 0;">
+            <input class="form-check-input" type="checkbox"
+              [(ngModel)]="gridCheckAll" (change)="gridAllRowsCheckBoxChecked($event)" />
+            <span class="form-check-sign">
+              <span class="check"></span>
+            </span>
+          </td>
+        </tr>
+        <tr>
+          <th>
+
+
+          </th>
+          <th>Id</th>
+          <th>Full Name</th>
+          <th>Date Of Birth</th>
+          <th>Gender</th>
+          <th>Salary</th>
+          <th>Designation</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="employee?.length != 0">
+        <tr *ngFor="let emp of employee">
+          <td>
+            <input class="form-check-input" type="checkbox" [(ngModel)]="emp.checked"
+              (change)="rowCheckBoxChecked($event, emp.id)">
+            <span class="form-check-sign">
+              <span class="check"></span>
+            </span>
+          </td>
+          <td>{{ emp.id }}</td>
+          <td>{{ emp.fullName }}</td>
+          <td>{{ emp.dateOfBirth  }}</td>
+          <td>{{ emp.gender }}</td>
+          <td>{{ emp.salary }}</td>
+          <td>{{ emp.designation }}</td>
+          <td>
+            <button type="button" (click)="updateEmp(emp);" class="btn btn-outline-primary">Update</button>
+          </td>
+        </tr>
+      </tbody>
+      <tbody *ngIf="employee?.length == 0">
+        <tr>
+          <td colspan="6" class="no-data-available">No data!</td>
+        </tr>
+      <tbody>
+    </table>
+  </div>
+
+</div>
